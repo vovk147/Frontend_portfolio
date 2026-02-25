@@ -2,11 +2,13 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import ProjectDetail from "@/components/ProjectDetail/ProjectDetail";
 
-export default function ProjectPage() {
+// Next.js автоматически передает параметры маршрута в проп params
+export default function ProjectPage({ params }: { params: { slug: string } }) {
   return (
     <main>
       <Header />
-      <ProjectDetail />
+      {/* Передаем slug внутрь компонента, чтобы он знал, какой проект искать */}
+      <ProjectDetail slug={params.slug} />
       <Footer />
     </main>
   );
