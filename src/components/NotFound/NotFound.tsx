@@ -1,3 +1,4 @@
+@use "sass:math";
 import React from 'react';
 import Link from 'next/link';
 import styles from './NotFound.module.scss';
