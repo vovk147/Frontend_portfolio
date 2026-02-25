@@ -1,0 +1,133 @@
+// ENGINEERING VARIABLES
+$anim-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+$anim-fast: all 0.2s ease-out;
+
+:root[data-theme='dark'] {
+  --bg-main: #0a0a0a;
+  --bg-card: #141414;
+  --text-primary: #f5f5f7;
+  --text-secondary: #86868b;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --font-mono: 'Geist Mono', monospace;
+  --bg-rgb: 10, 10, 10;
+  
+  /* Цвет свечения для темной темы (Агрессивный RS6 Red) */
+  --glow-color: rgba(220, 38, 38, 0.35); 
+}
+
+:root[data-theme='light'] {
+  --bg-main: #f5f5f7;
+  --bg-card: #ffffff;
+  --text-primary: #1d1d1f;
+  --text-secondary: #484848;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --bg-rgb: 245, 245, 247;
+  
+  /* Цвет свечения для светлой темы (Мягкий красный) */
+  --glow-color: rgba(220, 38, 38, 0.05); 
+}
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.3s ease;
+  overflow-x: hidden;
+}
+
+// ==========================================
+// ГЛОБАЛЬНЫЕ НАСТРОЙКИ СЕКЦИЙ
+// ==========================================
+section {
+  position: relative; // Важно: удерживает свечение внутри секции
+  overflow: hidden;   // Обрезает свет, если он выходит за края экрана
+  width: 100%;
+  // Убираем жесткий фон отсюда, чтобы body просвечивал
+  background-color: transparent; 
+}
+
+// ==========================================
+// AMBIENT GLOW (ФОНОВАЯ ПОДСВЕТКА)
+// ==========================================
+.ambient-glow {
+  position: absolute;
+  width: 50vw; // Адаптивный размер
+  height: 50vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-color) 0%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(100px); // Максимальное размытие для "дорогого" эффекта
+  z-index: 0; // Свет на заднем плане
+  pointer-events: none; // Чтобы свет не блокировал клики по кнопкам
+  transition: background 0.3s ease;
+
+  // --- МОДИФИКАТОРЫ ПОЗИЦИЙ --- //
+  
+  &.top-right {
+    top: -15%;
+    right: -10%;
+  }
+
+  &.top-left {
+    top: -15%;
+    left: -10%;
+  }
+
+  &.bottom-left {
+    bottom: -15%;
+    left: -10%;
+  }
+  
+  &.bottom-right {
+    bottom: -15%;
+    right: -10%;
+  }
+
+  &.center-left {
+    top: 50%;
+    left: -20%;
+    transform: translateY(-50%);
+  }
+
+  &.center-right {
+    top: 50%;
+    right: -20%;
+    transform: translateY(-50%);
+  }
+
+  &.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+// Чтобы контент не перекрывался светом, задаем ему относительное позиционирование
+// ==========================================
+// ГЛОБАЛЬНЫЙ КОНТЕЙНЕР (АДАПТИВНЫЙ)
+// ==========================================
+.container {
+  position: relative;
+  z-index: 1; 
+  width: 100%; /* ИМЕННО ЭТА СТРОКА РЕШАЕТ ПРОБЛЕМУ ПРИЛИПАНИЯ */
+  max-width: 1200px; /* 1200px выглядит плотнее и дороже для карточек, чем 1440px */
+  margin: 0 auto;
+  
+  /* Резиновые безопасные отступы для разных экранов */
+  padding: 0 20px; /* Для телефонов (чтобы не было прилипания) */
+
+  @media (min-width: 768px) {
+    padding: 0 40px; /* Для планшетов */
+  }
+
+  @media (min-width: 1280px) {
+    padding: 0; /* На больших экранах отступы не нужны, центрирует margin: 0 auto */
+  }
+}

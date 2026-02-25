@@ -1,0 +1,101 @@
+.errorWrapper {
+  position: relative;
+  height: 100vh;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif; // Можешь заменить на свой основной шрифт
+
+  .codeContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .code {
+    font-size: clamp(8rem, 25vw, 22rem);
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(to bottom, #fff 60%, #444 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 0.8;
+    z-index: 2;
+    letter-spacing: -5px;
+  }
+
+  .verticalText {
+    position: absolute;
+    right: -40px;
+    transform: rotate(90deg);
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .backBtn {
+    margin-top: -20px;
+    padding: 12px 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    text-decoration: none;
+
+    &:hover {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      border-color: #fff;
+    }
+  }
+
+  /* Лепестки */
+  .petals {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .petal {
+    position: absolute;
+    background: linear-gradient(45deg, #7a0012, #4a000b);
+    width: 14px;
+    height: 14px;
+    border-radius: 150% 0 150% 0;
+    filter: blur(0.5px);
+    opacity: 0;
+    animation: fall linear infinite;
+
+    @for $i from 1 through 25 {
+      &:nth-child(#{$i}) {
+        left: random(100) * 1%;
+        animation-duration: (random(5) + 5) * 1s;
+        animation-delay: random(10) * -1s;
+        width: (random(10) + 5) * 1px;
+        height: (random(10) + 5) * 1px;
+      }
+    }
+  }
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}

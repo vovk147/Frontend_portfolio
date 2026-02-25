@@ -1,0 +1,616 @@
+/* ПРЕМІАЛЬНА ПАЛІТРА ТА ЗМІННІ */
+$mtm-crimson: #8b0000;
+$mtm-coral: #ff4d4dc0;
+$text-dim: #E0E0E0;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0;
+
+  &__carbon-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    flex-direction: row-reverse;
+
+    @media (max-width: 1100px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 40px;
+      padding-top: 40px;
+    }
+  }
+
+  &__main-content {
+    flex: 1;
+    max-width: 650px;
+
+    @media (max-width: 1100px) {
+      margin: 0 auto;
+    }
+  }
+
+  &__visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    perspective: 1200px;
+  }
+
+  /* ТЕКСТОВИЙ БЛОК */
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+
+    @media (max-width: 1100px) {
+      justify-content: center;
+    }
+
+    .rs-badge {
+      background: $mtm-crimson;
+      color: #fff;
+      padding: 4px 16px;
+      font-weight: 900;
+      font-style: italic;
+      clip-path: polygon(15% 0, 100% 0, 85% 100%, 0% 100%);
+    }
+
+    .status-text {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: $text-dim;
+      letter-spacing: 2px;
+    }
+  }
+
+  &__title {
+    font-size: clamp(3rem, 7.5vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    letter-spacing: -2px;
+
+    .glow-text {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--text-secondary);
+    }
+  }
+
+  /* БИОГРАФИЯ (СИСТЕМНЫЕ ХАРАКТЕРИСТИКИ) */
+  /* БИОГРАФИЯ (КЛАССИЧЕСКИЙ МИНИМАЛИЗМ) */
+  &__bio {
+    margin-bottom: 40px;
+    max-width: 500px;
+
+    .sys-specs {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px; // Уменьшили отступ, чтобы блок был более компактным
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.95rem;
+        // Убрали тяжелый фон, оставили прозрачность
+        background: transparent;
+        padding: 6px 0; // Убрали боковые отступы
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05); // Тонкая линия снизу вместо левой
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-bottom-color: rgba($mtm-crimson, 0.5);
+          transform: translateX(5px);
+        }
+
+        .spec-key {
+          font-family: var(--font-mono);
+          color: var(--text-secondary); // Сделали ключ серым, чтобы не кричал
+          font-weight: 600;
+          letter-spacing: 1px;
+          min-width: 100px; // Выровняли колонку
+        }
+
+        .spec-val {
+          font-family: 'Inter', sans-serif;
+          color: var(--text-primary); // А сами данные — белыми, для читаемости
+          font-weight: 500;
+        }
+      }
+
+      // Убираем линию у последнего элемента
+      li:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  /* СОЦСЕТИ И ТУЛТИПЫ */
+  &__socials {
+    margin-bottom: 45px;
+    max-width: 450px;
+
+    @media (max-width: 1100px) {
+      margin: 0 auto 45px;
+    }
+
+    .socials-grid {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      @media (max-width: 1100px) {
+        justify-content: center;
+      }
+    }
+
+    .social-icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+
+      .social-tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(10, 10, 10, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #fff;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 5px;
+          border-style: solid;
+          border-color: rgba(255, 255, 255, 0.1) transparent transparent transparent;
+        }
+      }
+
+      &:hover {
+        background: rgba($mtm-crimson, 0.15);
+        border-color: rgba($mtm-crimson, 0.5);
+        color: #fff;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba($mtm-crimson, 0.2);
+
+        .social-tooltip {
+          opacity: 1;
+          visibility: visible;
+          bottom: calc(100% + 12px);
+        }
+      }
+    }
+  }
+
+  /* КНОПКИ (CALL TO ACTION) */
+  &__actions {
+    display: flex;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    a {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 32px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-decoration: none;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: rgba($mtm-crimson, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba($mtm-crimson, 0.3);
+
+      .btn-glare {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transform: skewX(-20deg);
+        transition: 0.5s;
+      }
+
+      &:hover {
+        background: $mtm-crimson;
+        box-shadow: 0 0 30px rgba($mtm-crimson, 0.6);
+        transform: translateY(-2px);
+
+        .btn-glare {
+          left: 150%;
+        }
+      }
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  /* ==========================================
+     СПІДОМЕТР AUDI RS6 STYLE (СУПЕР ДЕТАЛІЗАЦІЯ 3D)
+     ========================================== */
+  .rs-gauge {
+    position: relative;
+    width: clamp(280px, 38vw, 480px);
+    aspect-ratio: 1;
+    will-change: transform;
+    margin: 0 auto;
+    transform-style: preserve-3d;
+
+    &__body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #141414 0%, #050505 80%, #000 100%);
+      border: 10px solid #0f0f0f;
+      box-shadow:
+        inset 0 0 50px rgba(0, 0, 0, 1),
+        0 30px 60px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+      transform-style: preserve-3d;
+    }
+
+    .deco-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+
+      &-1 {
+        width: 92%;
+        height: 92%;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+
+      &-2 {
+        width: 84%;
+        height: 84%;
+        border: 1px dashed rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .tech-labels {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+
+      span {
+        position: absolute;
+        font-family: 'Geist Mono', monospace;
+        font-size: 0.65rem;
+        color: #444;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .label-boost {
+        top: 35%;
+        left: 22%;
+      }
+
+      .label-temp {
+        top: 35%;
+        right: 22%;
+      }
+
+      .label-sys {
+        bottom: 26%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #333;
+      }
+    }
+
+    &__ticks {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+
+      .tick {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 50%;
+        transform-origin: bottom center;
+        transform: translateX(-50%) rotate(var(--angle));
+
+        &--minor {
+          width: 1px;
+          background: linear-gradient(to bottom, #333 4px, transparent 4px);
+        }
+
+        &--major {
+          width: 2.5px;
+          background: linear-gradient(to bottom, #999 10px, transparent 10px);
+        }
+
+        &--red {
+          background: linear-gradient(to bottom, $mtm-crimson 10px, transparent 10px);
+        }
+      }
+    }
+
+    &__numbers {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+
+      .kmh-label {
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Inter', sans-serif;
+        color: #555;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .num {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #dcdcdc;
+
+        --dist: -165px;
+
+        @media (max-width: 768px) {
+          --dist: -115px;
+          font-size: 0.85rem;
+        }
+
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateY(var(--dist)) rotate(calc(-1 * var(--angle)));
+
+        &--red {
+          color: $mtm-crimson;
+          text-shadow: 0 0 10px rgba($mtm-crimson, 0.6);
+        }
+      }
+    }
+
+    &__needle-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transform-style: preserve-3d;
+    }
+
+    &__needle-rotator {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-origin: center center;
+      transform-style: preserve-3d;
+
+      .needle-shadow {
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        width: 8px;
+        height: 44%;
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateX(-50%) translateZ(-5px) rotate(-3deg);
+        border-radius: 5px;
+        filter: blur(5px);
+      }
+
+      .needle-body {
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        width: 4px;
+        height: 45%;
+        background: $mtm-crimson;
+        transform: translateX(-50%);
+        border-radius: 50% 50% 0 0;
+        box-shadow: inset -1px 0 3px rgba(0, 0, 0, 0.4);
+      }
+
+      .needle-glow {
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        width: 14px;
+        height: 48%;
+        background: rgba($mtm-crimson, 0.3);
+        filter: blur(12px);
+        transform: translateX(-50%);
+      }
+    }
+
+    &__center-wrap {
+      position: absolute;
+      inset: 32%;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+
+      .profile-img {
+        border-radius: 50%;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.1) brightness(0.8);
+        position: relative;
+        z-index: 2;
+        transition: filter 0.4s ease;
+      }
+
+      .center-bezel {
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 8px solid #080808;
+        box-shadow:
+          inset 0 4px 8px rgba(0, 0, 0, 1),
+          0 15px 25px rgba(0, 0, 0, 0.9);
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      &:hover .profile-img {
+        filter: grayscale(0) contrast(1.05) brightness(1.1);
+      }
+    }
+
+    &__glass {
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      pointer-events: none;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+
+      .dynamic-glare {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        filter: blur(5px);
+      }
+    }
+  }
+}
+
+/* СВІТЛА ТЕМА */
+/* СВІТЛА ТЕМА */
+[data-theme='light'] .hero {
+  .btn-glass {
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .btn-glass:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .sys-specs li {
+    background: rgba(0, 0, 0, 0.03);
+    border-left-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .sys-specs li .spec-val {
+    color: #333;
+  }
+
+  .social-icon-btn {
+    color: #333;
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  // НОВЫЙ ФИКС ДЛЯ ТЕКСТА STAGE_3
+  .status-text {
+    color: #333; // Делаем текст темно-серым, чтобы отлично читался на белом
+    font-weight: 700;
+  }
+
+  .status-text .cursor {
+    color: $mtm-crimson; // Оставляем нижнее подчеркивание красным для акцента
+  }
+
+  .sys-specs li {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .sys-specs li:hover {
+    border-bottom-color: rgba($mtm-crimson, 0.4);
+  }
+
+  .sys-specs li .spec-key {
+    color: #666; // Серый ключ в светлой теме
+  }
+
+  .sys-specs li .spec-val {
+    color: #111; // Темные данные
+  }
+}
