@@ -1,0 +1,167 @@
+$mtm-crimson: #8b0000;
+$mtm-light: #b30000;
+$panel-bg: rgba(15, 17, 26, 0.6);
+$glass-border: rgba(255, 255, 255, 0.05);
+
+.admin-projects-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px;
+
+  /* ЗАГАЛЬНИЙ КЛАС ДЛЯ СКЛА */
+  .glass-panel {
+    background: $panel-bg;
+    backdrop-filter: blur(25px);
+    border: 1px solid $glass-border;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+
+  /* ВЕРХНЯ ПАНЕЛЬ ПОШУКУ */
+  .projects-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search-box {
+      position: relative;
+      flex-grow: 1;
+      max-width: 400px;
+
+      .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 16px 12px 45px;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 16px;
+        color: #fff;
+        font-size: 0.95rem;
+        transition: 0.3s;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: rgba($mtm-light, 0.5);
+          background: rgba(0,0,0,0.5);
+        }
+      }
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 12px;
+
+      .filter-btn {
+        display: flex; align-items: center; gap: 8px;
+        padding: 12px 20px; border-radius: 16px;
+        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05);
+        color: #fff; font-weight: 600; cursor: pointer; transition: 0.3s;
+        &:hover { background: rgba(255,255,255,0.1); }
+      }
+
+      .create-btn {
+        display: flex; align-items: center; gap: 8px;
+        padding: 12px 24px; border-radius: 16px;
+        background: $mtm-crimson; color: #fff; text-decoration: none;
+        font-weight: 600; transition: 0.3s; box-shadow: 0 5px 15px rgba($mtm-crimson, 0.3);
+        &:hover { background: $mtm-light; transform: translateY(-2px); box-shadow: 0 8px 20px rgba($mtm-crimson, 0.4); }
+      }
+    }
+  }
+
+  /* ТАБЛИЦЯ ПРОЕКТІВ */
+  .projects-table-container {
+    overflow-x: auto;
+    padding: 0; // Прибираємо внутрішній відступ, щоб таблиця була на всю ширину картки
+
+    .loading-state, .empty-state {
+      padding: 50px; text-align: center; color: #6b7280;
+      .spin-icon { animation: spin 2s linear infinite; margin-bottom: 15px; color: $mtm-light; }
+    }
+
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+
+      th {
+        padding: 20px 24px;
+        color: #6b7280;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        &.actions-col { text-align: right; }
+      }
+
+      td {
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.02);
+        vertical-align: middle;
+      }
+
+      tr {
+        transition: 0.3s;
+        &:hover { background: rgba(255,255,255,0.02); }
+        &:last-child td { border-bottom: none; }
+      }
+
+      /* Стилі окремих комірок */
+      .title-cell {
+        .title-wrapper {
+          display: flex; align-items: center; gap: 15px;
+          .title-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba($mtm-crimson, 0.2); color: $mtm-light; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
+          strong { color: #fff; font-size: 1rem; display: block; margin-bottom: 4px; }
+          .view-link { display: inline-flex; align-items: center; gap: 4px; color: #6b7280; font-size: 0.8rem; text-decoration: none; transition: 0.3s; &:hover { color: $mtm-light; } }
+        }
+      }
+
+      .tech-cell .tech-pills {
+        display: flex; gap: 6px; flex-wrap: wrap;
+        .mini-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; color: #d1d5db; font-family: var(--font-mono); }
+      }
+
+      .status-cell .status-badge {
+        padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-block;
+        &.progress { background: rgba(74, 144, 226, 0.1); color: #4a90e2; }
+        &.done { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+      }
+
+      .date-cell { color: #9ca3af; font-size: 0.9rem; }
+
+      .actions-cell {
+        .action-buttons {
+          display: flex; gap: 8px; justify-content: flex-end;
+          
+          .action-btn {
+            width: 36px; height: 36px; border-radius: 10px; border: none;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+            background: rgba(255,255,255,0.05); color: #9ca3af;
+            
+            &.edit:hover { background: rgba(74, 144, 226, 0.2); color: #4a90e2; transform: translateY(-2px); }
+            &.delete:hover { background: rgba(255, 77, 77, 0.2); color: #ff4d4d; transform: translateY(-2px); }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }

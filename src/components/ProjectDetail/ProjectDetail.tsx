@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation'; // Хук для получения [slug] из URL
+import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Github, ExternalLink, Activity, AlertTriangle, Layers, Code2 } from 'lucide-react';
+import { ArrowLeft, Github, ExternalLink, Activity, AlertTriangle, Layers, Code2, Image as ImageIcon } from 'lucide-react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useLanguage } from "@/context/LanguageContext";
@@ -16,6 +16,7 @@ const translations: any = { en, uk, pl };
 interface Tag { _id: string; name: string; color: string; slug: string; }
 interface Project {
   _id: string; slug: string; stage: string; techStack: string[]; tags: Tag[]; mainImage: string;
+  gallery?: string[]; // Добавили поддержку галереи
   links: { github: string; live: string; }; isFeatured: boolean;
   translations: { en: { title: string; description: string; }; uk: { title: string; description: string; }; pl: { title: string; description: string; }; };
 }
@@ -23,7 +24,7 @@ interface Project {
 const ProjectDetail = () => {
   const { lang } = useLanguage();
   const params = useParams(); 
-  const slug = params.slug; // Получаем slug или id из URL
+  const slug = params.slug;
 
   const t = (path: string) => {
     const keys = path.split('.');
@@ -41,12 +42,13 @@ const ProjectDetail = () => {
 
     const fetchProject = async () => {
       try {
-        // Делаем запрос к твоему API по конкретному slug/id
-        const res = await axios.get(`http://localhost:5000/api/projects/${slug}`);
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await axios.get(`${API_URL}/api/projects/slug/${slug}`);
+        
         if (res.data.success && res.data.data) {
             setProject(res.data.data);
         } else if (res.data && !res.data.success) {
-            setProject(res.data); // На случай если бекенд отдает сразу объект
+            setProject(res.data);
         } else {
             setError(true);
         }
@@ -119,10 +121,9 @@ const ProjectDetail = () => {
           
           {/* ЛЕВАЯ КОЛОНКА (ОПИСАНИЕ) */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="info-main">
-            <div className="glass-panel">
+            <div className="glass-panel description-panel">
               <h3 className="panel-title"><Layers size={18}/> {t('projects.overview')}</h3>
               <div className="description-content">
-                {/* Если описание содержит переносы строк, красиво их выводим */}
                 {getTranslation(project, 'description').split('\n').map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
@@ -133,7 +134,6 @@ const ProjectDetail = () => {
           {/* ПРАВАЯ КОЛОНКА (СПЕЦИФИКАЦИИ И ССЫЛКИ) */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="info-sidebar">
             
-            {/* ТЕХНОЛОГИИ */}
             <div className="glass-panel tech-panel">
               <h3 className="panel-title"><Code2 size={18}/> {t('projects.tech_specs')}</h3>
               <div className="tech-pills">
@@ -143,7 +143,6 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            {/* ССЫЛКИ */}
             <div className="glass-panel links-panel">
               <h3 className="panel-title"><ExternalLink size={18}/> {t('projects.external_links')}</h3>
               <div className="links-wrapper">
@@ -165,6 +164,22 @@ const ProjectDetail = () => {
 
           </motion.div>
         </div>
+
+        {/* ГАЛЕРЕЯ (Появляется только если есть фото) */}
+        {project.gallery && project.gallery.length > 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="project-gallery-section">
+             <div className="glass-panel gallery-panel">
+                <h3 className="panel-title"><ImageIcon size={18}/> {t('projects.gallery')}</h3>
+                <div className="gallery-grid">
+                  {project.gallery.map((imgUrl, idx) => (
+                    <div key={idx} className="gallery-item">
+                      <img src={getImageUrl(imgUrl)} alt={`Gallery image ${idx + 1}`} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+             </div>
+          </motion.div>
+        )}
 
       </div>
     </section>

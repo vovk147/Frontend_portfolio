@@ -1,3 +1,4 @@
+@use "sass:math";
 .errorWrapper {
   position: relative;
   height: 100vh;
@@ -84,11 +85,11 @@
 
     @for $i from 1 through 25 {
       &:nth-child(#{$i}) {
-        left: random(100) * 1%;
-        animation-duration: (random(5) + 5) * 1s;
-        animation-delay: random(10) * -1s;
-        width: (random(10) + 5) * 1px;
-        height: (random(10) + 5) * 1px;
+        left: math.random(100) * 1%;
+        animation-duration: (math.random(5) + 5) * 1s;
+        animation-delay: math.random(10) * -1s;
+        width: (math.random(10) + 5) * 1px;
+        height: (math.random(10) + 5) * 1px;
       }
     }
   }

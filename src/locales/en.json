@@ -120,5 +120,15 @@
     "no_results": "NO MATCHES FOUND",
     "view_grid": "GRID",
     "view_list": "LIST"
-  }
+  },
+  "projects": {
+  "not_found": "Project Not Found",
+  "back_to_archive": "Back to Archive",
+  "overview": "Project Overview",
+  "tech_specs": "Tech Specs",
+  "external_links": "Resources",
+  "live_site": "Live Site",
+  "source_code": "Source Code",
+  "gallery": "Gallery"
+}
 }

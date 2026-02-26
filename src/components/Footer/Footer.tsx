@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { ArrowUp, Github, Linkedin, Mail, Code2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import en from "@/locales/en.json";
@@ -19,6 +20,30 @@ const Footer = () => {
   };
 
   const currentYear = new Date().getFullYear();
+
+  // 1. СТЕЙТ ДЛЯ НАЛАШТУВАНЬ З БЕКЕНДУ
+  const [settings, setSettings] = useState<any>({
+    email: "vovk.zheka1@outlook.com", // Дефолтне значення
+    socials: { github: "#", linkedin: "#" } 
+  });
+
+  // 2. ЗАВАНТАЖУЄМО ДАНІ ПРИ ПОЯВІ ФУТЕРА
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        // Запит публічний, без токена
+        const res = await axios.get(`${API_URL}/api/settings`);
+        if (res.data) {
+          setSettings(res.data);
+        }
+      } catch (error) {
+        console.error("Помилка завантаження налаштувань:", error);
+      }
+    };
+
+    fetchSettings();
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -59,17 +84,19 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* КОЛОНКА 3: СЕТЬ И СОЦСЕТИ (С ТУЛТИПАМИ!) */}
+          {/* КОЛОНКА 3: СЕТЬ И СОЦСЕТИ (ДИНАМІЧНІ ПОСИЛАННЯ) */}
           <div className="footer-social">
             <h3 className="column-title">{t('footer.social_title')}</h3>
             <div className="social-links">
-              <a href="#" target="_blank" rel="noreferrer" className="social-btn" data-tooltip="GitHub">
+              {/* 3. ВИКОРИСТОВУЄМО ДАНІ ЗІ СТЕЙТУ */}
+              <a href={settings.socials?.github || "#"} target="_blank" rel="noreferrer" className="social-btn" data-tooltip="GitHub">
                 <Github size={20} />
               </a>
-              <a href="#" target="_blank" rel="noreferrer" className="social-btn" data-tooltip="LinkedIn">
+              {/* Якщо в тебе в моделі немає LinkedIn, а є Telegram/Instagram, можеш змінити тут */}
+              <a href={settings.socials?.linkedin || "#"} target="_blank" rel="noreferrer" className="social-btn" data-tooltip="LinkedIn">
                 <Linkedin size={20} />
               </a>
-              <a href="mailto:vovk.zheka1@outlook.com" className="social-btn" data-tooltip="Outlook">
+              <a href={`mailto:${settings.email}`} className="social-btn" data-tooltip="Email">
                 <Mail size={20} />
               </a>
             </div>

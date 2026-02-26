@@ -78,7 +78,15 @@
     "open_archive": "[ OTWÓRZ PEŁNE ARCHIWUM ]",
     "no_desc": "Brak opisu.",
     "loading": "INICJALIZACJA ARCHIWUM...",
-    "error": "BŁĄD POŁĄCZENIA"
+    "error": "BŁĄD POŁĄCZENIA",
+    "not_found": "Nie znaleziono projektu",
+  "back_to_archive": "Powrót do archiwum",
+  "overview": "Przegląd projektu",
+  "tech_specs": "Technologie",
+  "external_links": "Zasoby",
+  "live_site": "Zobacz stronę",
+  "source_code": "Kod źródłowy",
+  "gallery": "Galeria"
   },
   "contact": {
     "section_title": "KANAŁ ŁĄCZNOŚCI",

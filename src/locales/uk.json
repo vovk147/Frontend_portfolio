@@ -120,5 +120,15 @@
     "no_results": "ЗБІГІВ НЕ ЗНАЙДЕНО",
     "view_grid": "СІТКА",
     "view_list": "СПИСОК"
-  }
+  },
+ "projects": {
+  "not_found": "Проєкт не знайдено",
+  "back_to_archive": "Повернутися до архіву",
+  "overview": "Огляд проєкту",
+  "tech_specs": "Специфікації",
+  "external_links": "Ресурси",
+  "live_site": "Відкрити сайт",
+  "source_code": "Вихідний код",
+  "gallery": "Галерея"
+}
 }

@@ -1,6 +1,7 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import axios from "axios";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import en from "@/locales/en.json";
@@ -13,9 +14,6 @@ import "./Hero.scss";
 const translations: any = { en, uk, pl };
 
 const Hero = () => {
-  // ==========================================
-  // ВОТ ЭТА ФУНКЦИЯ ПОТЕРЯЛАСЬ, ВЕРНУЛ ЕЁ НА МЕСТО:
-  // ==========================================
   const { lang } = useLanguage();
   const t = (path: string) => {
     const keys = path.split('.');
@@ -24,14 +22,31 @@ const Hero = () => {
     return res || path;
   };
 
-  // Твои реальные ссылки на соцсети
+  // 1. СТЕЙТ ДЛЯ НАЛАШТУВАНЬ З БЕКЕНДУ
+  const [settings, setSettings] = useState<any>(null);
+
+  // 2. ЗАВАНТАЖЕННЯ ДАНИХ
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await axios.get(`${API_URL}/api/settings`);
+        if (res.data) setSettings(res.data);
+      } catch (error) {
+        console.error("Помилка завантаження налаштувань:", error);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // 3. Динамічні лінки на основі бази даних (з фолбеками на старі посилання)
   const socialLinks = [
-    { id: 'github', icon: FaGithub, url: 'https://github.com/vovk147', label: 'GitHub' },
-    { id: 'telegram', icon: FaTelegramPlane, url: 'https://t.me/vovk147', label: 'Telegram' },
-    { id: 'discord', icon: FaDiscord, url: 'https://discord.com/users/1060982121092612197/', label: 'Discord' },
-    { id: 'instagram', icon: FaInstagram, url: 'https://www.instagram.com/vovk1471/', label: 'Instagram' },
-    { id: 'linkedin', icon: FaLinkedinIn, url: '#', label: 'LinkedIn' }, 
-    { id: 'email', icon: MdEmail, url: 'mailto:vovk.zheka1@outlook.com', label: 'Email' },
+    { id: 'github', icon: FaGithub, url: settings?.socials?.github || 'https://github.com/vovk147', label: 'GitHub' },
+    { id: 'telegram', icon: FaTelegramPlane, url: settings?.socials?.telegram || 'https://t.me/vovk147', label: 'Telegram' },
+    { id: 'discord', icon: FaDiscord, url: settings?.socials?.discord || 'https://discord.com/users/1060982121092612197/', label: 'Discord' },
+    { id: 'instagram', icon: FaInstagram, url: settings?.socials?.instagram || 'https://www.instagram.com/vovk1471/', label: 'Instagram' },
+    { id: 'linkedin', icon: FaLinkedinIn, url: settings?.socials?.linkedin || '#', label: 'LinkedIn' }, 
+    { id: 'email', icon: MdEmail, url: `mailto:${settings?.email || 'vovk.zheka1@outlook.com'}`, label: 'Email' },
   ];
 
   // ==========================================
@@ -95,14 +110,13 @@ const Hero = () => {
               style={{ rotateX, rotateY, perspective: 1200, transformStyle: "preserve-3d" }}
             >
               <div className="rs-gauge__body">
-                
                 <div className="deco-ring deco-ring-1" style={{ transform: "translateZ(10px)" }}></div>
                 <div className="deco-ring deco-ring-2" style={{ transform: "translateZ(20px)" }}></div>
                 
                 <div className="tech-labels" style={{ transform: "translateZ(20px)" }}>
                   <span className="label-boost">BOOST: MAX</span>
                   <span className="label-temp">OIL: 90°C</span>
-                  <span className="label-sys">SYS: OK</span>
+                  <span className="label-sys">SYS: {settings?.isLookingForWork ? "OPEN" : "OK"}</span>
                 </div>
                 
                 <div className="rs-gauge__ticks" style={{ transform: "translateZ(30px)" }}>
@@ -147,7 +161,6 @@ const Hero = () => {
                 <div className="rs-gauge__glass" style={{ transform: "translateZ(90px)" }}>
                   <motion.div className="dynamic-glare" style={{ x: glareX, y: glareY }} />
                 </div>
-
               </div>
             </motion.div>
           </div>
@@ -208,8 +221,9 @@ const Hero = () => {
                 <span className="btn-text">{t('hero.actions.primary')}</span>
                 <div className="btn-glare"></div>
               </a>
-              <a href="#contact" className="btn-glass">
-                <span className="btn-text">{t('hero.actions.secondary')}</span>
+              {/* Кнопка CV бере лінк з бази даних, якщо він є */}
+              <a href={settings?.cvLink || "#contact"} target={settings?.cvLink ? "_blank" : "_self"} className="btn-glass">
+                <span className="btn-text">{settings?.cvLink ? "Завантажити CV" : t('hero.actions.secondary')}</span>
               </a>
             </motion.div>
           </div>
