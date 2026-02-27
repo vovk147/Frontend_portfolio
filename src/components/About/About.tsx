@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import en from "@/locales/en.json";
 import uk from "@/locales/uk.json";
@@ -95,16 +95,19 @@ const About = () => {
     };
   }, [isModalOpen, lightboxImage]);
 
-  const containerVariants = {
+  // 👇 ТУТ ВИПРАВЛЕНО: Додано : Variants
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
-  const itemVariants = {
+  
+  // 👇 ТУТ ВИПРАВЛЕНО: Додано : Variants та as const
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 100 },
+      transition: { type: "spring" as const, stiffness: 100 },
     },
   };
 
