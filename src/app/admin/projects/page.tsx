@@ -262,7 +262,7 @@ export default function AdminProjects() {
                         <div>
                           <strong style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             {project.translations?.en?.title || project.translations?.uk?.title || 'Без назви'}
-                            {project.isFeatured && <Star size={14} color="#f1c40f" fill="#f1c40f" title="Featured" />}
+                            {project.isFeatured && <span title="Featured" style={{ display: 'flex' }}><Star size={14} color="#f1c40f" fill="#f1c40f" /></span>}
                           </strong>
                           <a href={`/projects/${project.slug}`} target="_blank" rel="noreferrer" className="view-link">
                             <ExternalLink size={12} /> /projects/{project.slug}
