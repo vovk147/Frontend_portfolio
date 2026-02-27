@@ -92,7 +92,7 @@ $mtm-light: #b30000;
           padding: 25px; display: flex; flex-direction: column; flex: 1;
           .card-header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; h3 { font-family: 'Inter', sans-serif; font-size: 1.2rem; color: #fff; margin: 0; } .grid-stage { font-family: var(--font-mono); font-size: 0.65rem; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 4px; color: #aaa; white-space: nowrap; } }
           /* Ограничиваем описание тремя строками */
-          .p-description { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #888; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+          .p-description { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #888; line-height: 1.5; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
           .tech-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; span { font-family: var(--font-mono); font-size: 0.7rem; color: #aaa; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); } }
           .links { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; a { color: #888; transition: 0.3s; &:hover { color: #fff; } } .details { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: $mtm-light; text-decoration: none; &:hover { color: $mtm-crimson; gap: 10px; } } }
         }

@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // 👈 Додали імпорт Variants
 import { useLanguage } from "@/context/LanguageContext";
 import en from "@/locales/en.json";
 import uk from "@/locales/uk.json";
 import pl from "@/locales/pl.json";
-// Добавили FaHtml5
 import { FaReact, FaNodeJs, FaFigma, FaGithub, FaServer, FaCode, FaHtml5 } from "react-icons/fa";
-// Добавили SiJavascript
 import { SiTypescript, SiMongodb, SiPostman, SiNextdotjs, SiTailwindcss, SiExpress, SiJavascript } from "react-icons/si";
 import { VscTerminalBash } from "react-icons/vsc";
 import "./Skills.scss";
@@ -23,14 +21,16 @@ const Skills = () => {
     return res || path;
   };
 
-  const containerVariants = {
+  // 👈 Додали тип Variants, щоб TypeScript був спокійний
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
   };
 
-  const itemVariants = {
+  // 👈 Додали тип Variants і 'as const' для spring
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 90 } }
+    visible: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 90 } }
   };
 
   return (
@@ -61,7 +61,6 @@ const Skills = () => {
               <div className="tech-group">
                 <h4 className="group-title">_FRONTEND & CORE</h4>
                 <div className="tech-items">
-                  {/* ВЕРНУЛИ JS И HTML/CSS */}
                   <div className="tech-pill"><SiJavascript className="i" /> JavaScript</div>
                   <div className="tech-pill"><FaHtml5 className="i" /> HTML / CSS</div>
                   <div className="tech-pill"><FaReact className="i" /> React</div>

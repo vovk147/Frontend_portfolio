@@ -9,29 +9,25 @@
     "status": "STAGE_3 // MTM_EDITION",
     "title_1": "FULLSTACK",
     "title_2": "ENGINEER",
-    "bio": "Developing <span>high-performance</span> digital infrastructure.",
-    "education": "Validated background: <span>80 academic hours</span> @ Logika IT School.",
-    "projects": "Status: <span>4 commercial projects</span> delivered.",
-    "strength_label": "STRENGTH",
-    "exp_label": "EXPERIENCE",
+    "bio": "Developing high-performance digital infrastructure.",
     "specs": {
       "location_label": "LOCATION:",
       "location_value": "Kielce, Poland",
       "stack_label": "CORE_STACK:",
       "stack_value": "TS, React, Node.js, MongoDB",
       "training_label": "TRAINING:",
-      "training_value": "Logika IT // 80 Acad. Hours",
+      "training_value": "Logika IT // Graduated",
       "languages_label": "LANGUAGES:",
-      "languages_value": "PL, EN, UA, RU"
+      "languages_value": "PL, EN, UKR, RUS"
     },
     "actions": {
       "primary": "VIEW CASES // DEPLOY",
       "secondary": "SYSTEM LOG // CONTACT"
     }
   },
-"about": {
+  "about": {
     "title_1": "_ARCHITECTURE",
-    "bio": "I am a full-stack developer. I successfully completed my training at Logika IT Academy and am now fully focused on building modern websites and web applications. My main priority is clean code, reliable architecture based on TypeScript / Node.js, and continuous skill development.",
+    "bio": "I am a full-stack developer focused on building modern web applications. My priority is clean code, reliable architecture based on TypeScript and Node.js, and continuous skill development.",
     "status": "STATUS: OPTIMAL_PERFORMANCE",
     "title_2": "_ENGINE_CORE",
     "title_3": "_SYSTEM_STATUS",
@@ -40,7 +36,7 @@
     "edu_practice": "PRACTICE:",
     "edu_practice_val": "4+ Fullstack Projects",
     "edu_langs": "LANGUAGES:",
-    "edu_langs_val": "PL, EN, UA, RU",
+    "edu_langs_val": "PL, EN, UKR, RUS",
     "title_4": "_WORKSPACE_SPECS",
     "btn_details": "[ SYSTEM_DETAILS ]",
     "modal_title": "WORKSPACE OVERVIEW",
@@ -48,14 +44,14 @@
     "modal_fullscreen": "Fullscreen",
     "telemetry_title": "_LIVE_HARDWARE_MONITOR",
     "phil_title": "Minimalist Engineering",
-    "phil_text": "Designed for maximum productivity. Zero visual noise, just powerful hardware and two 2K monitors for comfortable work with code and database architecture.",
+    "phil_text": "Designed for maximum productivity. Zero visual noise, just powerful hardware and two 27-inch monitors for comfortable work with code and database architecture.",
     "spec_power": "Processing Power",
     "spec_memory": "Memory & Storage",
     "spec_displays": "Displays & Vision",
     "spec_periph": "Peripherals & Chassis",
     "hw_cores": "14 Cores / 4.20 GHz Boost",
     "hw_ram": "16.0 GB High-Speed Memory",
-    "hw_desk": "Custom 206x62 cm Workspace + Dodge Viper Model Kit",
+    "hw_desk": "Custom 206x62 cm Workspace",
     "lightbox_close": "CLOSE",
     "lightbox_zoom_in": "Click to zoom in",
     "lightbox_zoom_out": "Click to zoom out"
@@ -76,9 +72,28 @@
     "view_case": "VIEW CASE",
     "details": "DETAILS",
     "open_archive": "[ OPEN FULL ARCHIVE ]",
-    "no_desc": "No description available.",
+    "no_description": "No description available.",
     "loading": "INITIALIZING ARCHIVE...",
-    "error": "CONNECTION ERROR"
+    "error": "CONNECTION ERROR",
+    "not_found": "Project Not Found",
+    "back_to_archive": "Back to Archive",
+    "overview": "Project Overview",
+    "tech_specs": "Tech Specs",
+    "external_links": "Resources",
+    "live_site": "Live Site",
+    "source_code": "Source Code",
+    "gallery": "Gallery"
+  },
+  "archive": {
+    "title": "FULL DATABASE",
+    "search": "> Search logs...",
+    "filters": "FILTERS",
+    "tech_stack": "TECH STACK",
+    "categories": "CATEGORIES",
+    "clear_all": "Clear all",
+    "no_results": "NO MATCHES FOUND",
+    "view_grid": "GRID",
+    "view_list": "LIST"
   },
   "contact": {
     "section_title": "COMMUNICATION LINK",
@@ -98,7 +113,7 @@
     "rate_limit_msg": "Rate limit exceeded. Try again later."
   },
   "footer": {
-    "system_status": "SYSTEM OFFLINE",
+    "system_status": "SYSTEM OPTIMAL",
     "back_to_top": "BACK TO TOP",
     "rights": "All rights reserved.",
     "built_with": "Engineered with React & Next.js",
@@ -109,26 +124,5 @@
     "link_skills": "SKILLS",
     "link_projects": "PROJECTS",
     "link_contact": "CONTACT"
-  },
-  "archive": {
-    "title": "FULL DATABASE",
-    "search": "> Search logs...",
-    "filters": "FILTERS",
-    "tech_stack": "TECH STACK",
-    "categories": "CATEGORIES",
-    "clear_all": "Clear all",
-    "no_results": "NO MATCHES FOUND",
-    "view_grid": "GRID",
-    "view_list": "LIST"
-  },
-  "projects": {
-  "not_found": "Project Not Found",
-  "back_to_archive": "Back to Archive",
-  "overview": "Project Overview",
-  "tech_specs": "Tech Specs",
-  "external_links": "Resources",
-  "live_site": "Live Site",
-  "source_code": "Source Code",
-  "gallery": "Gallery"
-}
+  }
 }
