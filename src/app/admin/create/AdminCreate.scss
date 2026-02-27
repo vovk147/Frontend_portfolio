@@ -18,163 +18,141 @@ $input-bg: rgba(0, 0, 0, 0.3);
     .hero-title { font-size: 2.2rem; font-weight: 800; color: #fff; margin: 0; }
   }
 
+  /* ГОЛОВНА СІТКА ДЛЯ 2 КОЛОНОК */
+  .create-layout-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 380px; /* Ліва колонка гнучка, права фіксована 380px */
+    gap: 25px;
+    align-items: start; /* Щоб колонки не розтягувались одна під одну по висоті */
+
+    @media (max-width: 1100px) {
+      grid-template-columns: 1fr; /* На малих екранах одна під одною */
+    }
+  }
+
+  .main-column {
+    display: flex; flex-direction: column; gap: 25px;
+  }
+
+  .sidebar-column {
+    display: flex; flex-direction: column; gap: 25px;
+    position: sticky; top: 20px; /* Сайдбар буде "прилипати" при скролі */
+  }
+
   .glass-panel {
     background: $panel-bg; backdrop-filter: blur(25px);
     border: 1px solid $glass-border; border-radius: 24px;
     padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
   }
 
-  .create-form {
-    display: flex; flex-direction: column; gap: 25px;
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    color: #fff; font-size: 1.1rem; font-weight: 700;
+    margin-top: 0; margin-bottom: 25px; padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    svg { color: $mtm-light; }
+  }
 
-    .form-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 25px;
-      @media (max-width: 960px) { grid-template-columns: 1fr; }
+  /* СТИЛІ ІНПУТІВ */
+  .input-group {
+    margin-bottom: 20px;
+    label { display: flex; align-items: center; gap: 8px; color: #9ca3af; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+    
+    input[type="text"], input[type="url"], select, textarea {
+      width: 100%; padding: 14px 18px;
+      background: $input-bg; border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif;
+      transition: 0.3s; box-sizing: border-box;
+      &:focus { outline: none; border-color: rgba($mtm-light, 0.5); background: rgba(0,0,0,0.5); box-shadow: 0 0 0 3px rgba($mtm-crimson, 0.1); }
+    }
+    textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
+  }
+
+  /* ЗОБРАЖЕННЯ */
+  .file-drop-area {
+    position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 30px 20px; text-align: center;
+    background: rgba(0,0,0,0.2); border: 2px dashed rgba(255,255,255,0.1); border-radius: 16px;
+    transition: 0.3s; cursor: pointer; overflow: hidden;
+    
+    .upload-icon { color: $mtm-light; margin-bottom: 10px; }
+    p { color: #9ca3af; font-size: 0.9rem; font-weight: 500; margin: 0; }
+    
+    input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    &:hover { background: rgba(139,0,0,0.05); border-color: rgba($mtm-light, 0.5); }
+
+    &.has-image { padding: 0; border: none; }
+    .image-preview { width: 100%; height: 250px; object-fit: cover; border-radius: 14px; transition: 0.3s; &:hover { filter: brightness(0.7); } }
+  }
+
+  /* ВКЛАДКИ ПЕРЕКЛАДІВ */
+  .language-tabs {
+    display: flex; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 4px; margin-bottom: 20px;
+    .tab-btn {
+      flex: 1; background: transparent; border: none; color: #6b7280; font-weight: 600; font-size: 0.85rem;
+      padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: 0.3s;
+      &.active { background: rgba(255,255,255,0.1); color: #fff; }
+      &:hover:not(.active) { color: #fff; }
+    }
+  }
+
+  /* КНОПКА ЗБЕРЕЖЕННЯ В САЙДБАРІ */
+  .save-btn {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: linear-gradient(135deg, $mtm-light, $mtm-crimson);
+    color: #fff; padding: 16px; border: none; border-radius: 16px;
+    font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: 0.3s;
+    box-shadow: 0 10px 25px rgba($mtm-crimson, 0.3); margin-bottom: 20px;
+    
+    &:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 30px rgba($mtm-crimson, 0.5); }
+    &:disabled { opacity: 0.7; cursor: not-allowed; }
+  }
+
+  /* === ПАНЕЛЬ ТЕГІВ В САЙДБАРІ === */
+  .sidebar-search {
+    width: 100%; padding: 12px 15px; background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    color: #fff; margin-bottom: 15px; font-size: 0.9rem;
+    &:focus { outline: none; border-color: $mtm-light; }
+  }
+
+  .tags-scroll-box {
+    max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px;
+    
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+    .tag-checkbox-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px; cursor: pointer; transition: 0.3s;
+      &:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.1); }
+
+      input[type="checkbox"] { accent-color: $mtm-crimson; width: 18px; height: 18px; cursor: pointer; margin: 0; }
+      .color-dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+      .tag-name { color: #d1d5db; font-size: 0.95rem; font-weight: 500; }
     }
 
-    .section-title {
-      display: flex; align-items: center; gap: 10px;
-      color: #fff; font-size: 1.1rem; font-weight: 700;
-      margin-top: 0; margin-bottom: 25px; padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      svg { color: $mtm-light; }
+    .btn-create-tag-inline {
+      width: 100%; text-align: left; background: rgba(74, 144, 226, 0.1); color: #4a90e2;
+      border: 1px dashed rgba(74, 144, 226, 0.5); padding: 12px; border-radius: 10px;
+      cursor: pointer; font-size: 0.95rem; transition: 0.3s; margin-top: 5px;
+      &:hover { background: rgba(74, 144, 226, 0.2); border-color: #4a90e2; color: #fff; }
     }
+  }
 
-    /* СТИЛІ ІНПУТІВ */
-    .input-group {
-      margin-bottom: 20px;
-      label { display: flex; align-items: center; gap: 8px; color: #9ca3af; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
-      
-      input, select, textarea {
-        width: 100%; padding: 14px 18px;
-        background: $input-bg; border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 12px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif;
-        transition: 0.3s; box-sizing: border-box;
-        &:focus { outline: none; border-color: rgba($mtm-light, 0.5); background: rgba(0,0,0,0.5); box-shadow: 0 0 0 3px rgba($mtm-crimson, 0.1); }
-      }
-      
-      textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
-    }
-
-    .links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-    /* СТИЛІ ДЛЯ ЗАВАНТАЖЕННЯ ФАЙЛІВ */
-    .file-upload-group {
-      .file-drop-area {
-        position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        padding: 40px 20px; text-align: center;
-        background: rgba(0,0,0,0.2); border: 2px dashed rgba(255,255,255,0.1); border-radius: 16px;
-        transition: 0.3s; cursor: pointer; overflow: hidden;
-        
-        .upload-icon { color: $mtm-light; margin-bottom: 10px; }
-        p { color: #9ca3af; font-size: 0.9rem; font-weight: 500; margin: 0; }
-        
-        input[type="file"] {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          opacity: 0; cursor: pointer;
-        }
-
-        &:hover { background: rgba(139,0,0,0.05); border-color: rgba($mtm-light, 0.5); }
-      }
-    }
-
-    /* ВКЛАДКИ ПЕРЕКЛАДІВ */
-    .translations-header {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
-      margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);
-      
-      .section-title { border-bottom: none; margin: 0; padding: 0; }
-      
-      .language-tabs {
-        display: flex; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 4px;
-        .tab-btn {
-          background: transparent; border: none; color: #6b7280; font-weight: 600; font-size: 0.85rem;
-          padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.3s;
-          &.active { background: rgba(255,255,255,0.1); color: #fff; }
-          &:hover:not(.active) { color: #fff; }
-        }
-      }
-    }
-
-    /* КНОПКА ЗБЕРЕЖЕННЯ */
-    .form-actions {
-      display: flex; justify-content: flex-end; margin-top: 10px;
-      .save-btn {
-        display: flex; align-items: center; gap: 10px;
-        background: linear-gradient(135deg, $mtm-light, $mtm-crimson);
-        color: #fff; padding: 16px 32px; border: none; border-radius: 16px;
-        font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: 0.3s;
-        box-shadow: 0 10px 25px rgba($mtm-crimson, 0.3);
-        
-        &:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 30px rgba($mtm-crimson, 0.5); }
-        &:disabled { opacity: 0.7; cursor: not-allowed; }
-      }
+  /* TOGGLE FEATURED */
+  .feature-toggle {
+    display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    background: rgba(0,0,0,0.2); padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+    &:hover { background: rgba(255,255,255,0.05); }
+    
+    span { color: #d1d5db; font-size: 0.95rem; font-weight: 600; }
+    
+    .toggle-track {
+      width: 44px; height: 24px; background: rgba(255,255,255,0.1); border-radius: 12px; position: relative; transition: 0.3s;
+      .toggle-thumb { width: 20px; height: 20px; background: #fff; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+      &.active { background: $mtm-light; .toggle-thumb { transform: translateX(20px); } }
     }
   }
 }
-
-/* === НОВІ СТИЛІ ДЛЯ ФІЧ === */
-  
-  .title-row {
-    display: flex; justify-content: space-between; align-items: center;
-    @media (max-width: 768px) { flex-direction: column; align-items: flex-start; gap: 15px; }
-  }
-
-  /* Красивий перемикач (Toggle) для Featured */
-  .feature-toggle {
-    display: flex; align-items: center; gap: 12px; cursor: pointer;
-    background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-    
-    &:hover { background: rgba(255,255,255,0.05); }
-    
-    span { color: #d1d5db; font-size: 0.9rem; font-weight: 600; }
-    
-    .toggle-track {
-      width: 44px; height: 24px; background: rgba(255,255,255,0.1);
-      border-radius: 12px; position: relative; transition: 0.3s;
-      
-      .toggle-thumb {
-        width: 20px; height: 20px; background: #fff; border-radius: 50%;
-        position: absolute; top: 2px; left: 2px; transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        display: flex; align-items: center; justify-content: center;
-      }
-      
-      &.active {
-        background: $mtm-light;
-        .toggle-thumb { transform: translateX(20px); }
-      }
-    }
-  }
-
-  /* Стилі для Прев'ю Картинки */
-  .file-drop-area {
-    &.has-image { padding: 0; border: none; overflow: hidden; }
-    
-    .image-preview {
-      width: 100%; height: 200px; object-fit: cover;
-      transition: 0.3s; border-radius: 14px;
-      &:hover { filter: brightness(0.7); }
-    }
-  }
-
-  /* Стилі для вибору тегів */
-  .tags-selector {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
-    
-    .tag-pill {
-      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-      border-left: 3px solid #888; padding: 6px 14px; border-radius: 20px;
-      font-size: 0.85rem; color: #9ca3af; cursor: pointer; transition: 0.3s;
-      user-select: none;
-
-      &:hover { background: rgba(255,255,255,0.1); color: #fff; }
-      
-      &.selected {
-        background: rgba($mtm-crimson, 0.2);
-        border-color: rgba($mtm-light, 0.5);
-        color: #fff;
-        box-shadow: 0 0 10px rgba($mtm-crimson, 0.2);
-      }
-    }
-  }

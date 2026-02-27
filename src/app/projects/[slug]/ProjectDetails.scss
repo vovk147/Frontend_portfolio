@@ -1,0 +1,115 @@
+$mtm-crimson: #8b0000;
+$mtm-light: #b30000;
+$bg-dark: #0f111a;
+$panel-bg: rgba(15, 17, 26, 0.6);
+$glass-border: rgba(255, 255, 255, 0.05);
+
+.project-details-loading, .project-details-error {
+  height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #fff; text-align: center;
+  .spin-icon { animation: spin 2s linear infinite; margin-bottom: 20px; }
+}
+
+.project-details-page {
+  min-height: 100vh; padding-top: 40px; padding-bottom: 80px; position: relative;
+
+  .ambient-glow {
+    position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.15; pointer-events: none; z-index: -1;
+    &.center-top { top: -10%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, $mtm-light 0%, transparent 70%); }
+  }
+
+  .glass-panel {
+    background: $panel-bg; backdrop-filter: blur(25px); border: 1px solid $glass-border;
+    border-radius: 24px; padding: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    @media (max-width: 768px) { padding: 25px; border-radius: 20px; }
+  }
+
+  /* 1. ПОМІТНА КНОПКА ПОВЕРНЕННЯ */
+  .project-navigation {
+    margin-bottom: 30px;
+    .btn-back-prominent {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 20px 10px 10px; border-radius: 30px; color: #fff;
+      text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s;
+      
+      .icon-wrap { background: rgba(0,0,0,0.3); border-radius: 50%; padding: 8px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+      &:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); .icon-wrap { background: $mtm-crimson; transform: translateX(-3px); } }
+    }
+  }
+
+  /* 2. АКУРАТНИЙ ХЕДЕР ТА ФОТО */
+  .project-header {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 40px;
+    @media (max-width: 960px) { grid-template-columns: 1fr; gap: 30px; }
+
+    .badges {
+      display: flex; gap: 15px; margin-bottom: 20px;
+      .status-badge, .date-badge { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+      .status-badge.progress { background: rgba(74, 144, 226, 0.1); color: #4a90e2; }
+      .status-badge.done { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+      .date-badge { background: rgba(255,255,255,0.05); color: #d1d5db; }
+    }
+
+    .project-title { font-size: 2.8rem; font-weight: 800; color: #fff; margin: 0 0 15px 0; line-height: 1.2; letter-spacing: -1px; }
+    .project-subtitle { font-size: 1.1rem; color: #9ca3af; margin: 0 0 30px 0; line-height: 1.6; max-width: 90%; }
+
+    .action-links {
+      display: flex; gap: 15px; flex-wrap: wrap;
+      .btn-primary, .btn-glass { display: flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+      .btn-primary { background: $mtm-crimson; color: #fff; &:hover { background: $mtm-light; transform: translateY(-2px); } }
+      .btn-glass { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); &:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); } }
+    }
+
+    .header-visual {
+      width: 100%; display: flex; justify-content: flex-end;
+      .main-image { width: 100%; max-height: 350px; object-fit: cover; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); }
+    }
+  }
+
+  /* 3. ЗРУЧНИЙ ДЛЯ ЧИТАННЯ БЛОК */
+  .content-layout {
+    display: grid; grid-template-columns: 2fr 350px; gap: 40px; margin-bottom: 40px; align-items: start;
+    @media (max-width: 960px) { grid-template-columns: 1fr; }
+
+    .article-title, .sidebar-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 1.4rem; font-weight: 700; margin: 0 0 25px 0; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+    .main-article {
+      .formatted-text { 
+        color: #e5e7eb; line-height: 1.8; font-size: 1.1rem; 
+        p { margin-bottom: 1.5em; }
+      }
+      .empty-text { color: #6b7280; font-style: italic; }
+    }
+
+    .project-sidebar {
+      .sticky-box { position: sticky; top: 20px; padding: 30px; }
+      
+      .tags-list {
+        display: flex; flex-direction: column; gap: 10px;
+        .tech-tag {
+          display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: 12px;
+          background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); border-left-width: 4px;
+          color: #d1d5db; font-size: 0.95rem; font-weight: 500;
+          .dot { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+        }
+      }
+    }
+  }
+
+  /* 4. ГАЛЕРЕЯ */
+  .gallery-section {
+    .article-title { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 1.4rem; font-weight: 700; margin: 0 0 25px 0; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+      .gallery-item {
+        position: relative; border-radius: 16px; overflow: hidden; display: block; border: 1px solid rgba(255,255,255,0.05);
+        img { width: 100%; height: 220px; object-fit: cover; transition: 0.5s; display: block; }
+        .hover-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; color: #fff; opacity: 0; transition: 0.3s; backdrop-filter: blur(3px); }
+        &:hover { img { transform: scale(1.05); } .hover-overlay { opacity: 1; } }
+      }
+    }
+  }
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
